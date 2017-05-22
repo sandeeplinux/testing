@@ -1,0 +1,83 @@
+.sidebar-header{
+    background-color: $primary-color;
+   //box-shadow: 0 2px 4px rgba(33,33,33,.2);
+    color: #666666;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 230px;
+    z-index: 30;
+    .brand{
+        line-height: 60px;
+        color: #ffffff;
+    }
+}
+
+.header{
+    height: 60px;
+    background-color: $primary-color;
+    position: fixed;
+    //box-shadow: 0 2px 4px rgba(33,33,33,.2);
+    z-index: 20;
+    left: 0px;
+    -webkit-box-shadow: 1px 6px 5px -2px rgba(219,219,219,1);
+    -moz-box-shadow: 1px 6px 5px -2px rgba(219,219,219,1);
+    box-shadow: 1px 6px 5px -2px rgba(219,219,219,1);
+}
+
+.sidebar {
+    box-shadow: 0 0 10px 0 rgba(33,33,33,.2);
+    .nav{
+        li{
+            a{
+                color: #222;
+            }
+        }
+    }
+    background: #fff;
+    .sidebar-container{
+        top: 60px;
+    }
+}
+
+.table-check{
+    input[type="checkbox"] {
+        visibility: hidden;
+        position: absolute;
+    }
+}
+.more-btn{
+    font-size: 15px;
+    border-radius: 2px;
+    width: 25px;
+    height: 25px;
+    color: #E31837;
+    padding: 0px 8px;
+    text-align: center;
+    background-color: #eaeaea;
+}
+.nopadding{
+    padding: 0px !important;
+}
+.btn-orenge {
+    color: #fff;
+    background-color: #E31837;
+    border-color: #E31837;
+}
+.btn-orenge:hover {
+    color: #fff;
+    background-color: #E31837;
+    border-color: #E31837;
+}
+.success{
+    color:green;
+}
+.remove{
+    color:crimson;
+}
+.pending{
+    color: orange;
+}
+.inactive{
+    color: gainsboro;
+}

@@ -1,0 +1,120 @@
+<style>
+  h1 {
+ padding-bottom: 1.5%;
+ border-bottom: 1px solid #859398;
+  }
+</style>
+
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+<article class="content items-list-page">
+  <section class="content-header">
+    <h1>Node Admin Module</h1>
+  </section>
+  <div class="title-search-block">
+    <div class="title-block">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="title">
+            <!--<a ui-sref="app.addState" class="btn btn-orenge btn-sm rounded-s">
+                            <i class="fa fa-plus"></i> Add New
+                        </a>-->
+            <br />
+            <button type="button" class="btn btn-orenge btn-sm rounded-s" data-ng-click="self.actions('delete', self.selectedIds)" data-ng-if="self.selectedIds.length > 0">
+                                   Delete Selected
+                        </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="items-search">
+      <form class="form-inline" ng-submit="self.fetchData()">
+        <div class="input-group">
+          <input type="text" class="form-control boxed rounded-s" data-ng-model="self.query.filter" placeholder="Search for...">
+          <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                  </span>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div>
+    <alert:message options="globals.flash" data-ng-show="globals.flash" />
+  </div>
+  <div class="card items">
+    <ul class="item-list striped table-check">
+      <li class="item item-list-header hidden-sm-down">
+        <div class="item-row">
+          <div class="item-col fixed item-col-check" data-ng-show="self.stateList.length > 0">
+            <label class="item-check" id="select-all-items">
+                            <input type="checkbox" class="checkbox" data-ng-model="self.selectAll" data-ng-click="self.checkAll(self.stateList, self.selectAll)"/>
+                            <span></span>
+                        </label>
+          </div>
+          <div class="item-col item-col-header item-col-title">
+            <sort-th data-options="self.query" sort-prop="server" data-slength="self.stateList.length" col-name="server" sort-callback="self.fetchData()" />
+          </div>
+
+          <div class="item-col item-col-header item-col-title">
+            <sort-th data-options="self.query" data-slength="self.stateList.length" col-name="Lastupdated" sort-callback="self.fetchData()" />
+          </div>
+          <div class="item-col item-col-header item-col-title">
+            <sort-th data-options="self.query" data-slength="self.stateList.length" col-name="Status" sort-callback="self.fetchData()" />
+          </div>
+
+          <div class="item-col item-col-header item-col-title">
+            <div><span></span></div>
+          </div>
+        </div>
+      </li>
+      <li class="item" data-ng-repeat="state in self.stateList">
+        <div class="item-row">
+          <div class="item-col fixed item-col-check">
+            <label class="item-check" id="select-all-items">
+                            <input type="checkbox" class="checkbox" data-ng-model="state.selected"
+                                   data-ng-click="self.checkItem(self.stateList, $index, state.selected, state)"/>
+                            <span></span>
+                        </label>
+          </div>
+          <div class="item-col fixed pull-left item-col-title">
+            <div class="item-heading">{{state.IpAddress}}</div>
+            <div>
+              <h4 class="item-title">{{state.IpAddress}}</h4></div>
+          </div>
+          <!-- <div class="item-col fixed pull-left item-col-title">
+                        <div class="item-heading">{{state.Version}}</div>
+                        <div>{{state.Version}}</div>
+                    </div> -->
+          <div class="item-col fixed pull-left item-col-title">
+            <div class="item-heading">{{state.lastUpdated}}</div>
+            <div>{{state.lastUpdated}}</div>
+          </div>
+
+          <div class="item-col fixed item-col-title">
+            <div class="item-heading">
+              <status item-value="state.status"></status>
+            </div>
+            <div>
+              <status item-value="state.status"></status>
+            </div>
+          </div>
+          <div class="item-col fixed item-col-title">
+            <div class="btn-group " uib-dropdown is-open="status.isopen">
+              <button id="single-button" type="button" class=" pull-right btn btn-defult more-btn" uib-dropdown-toggle ng-disabled="disabled">
+                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                          </button>
+              <ul class="dropdown-menu pull-right " uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                <li role="menuitem"><a data-ng-click="self.actions('restart',[state.IpAddress])" ng-if="state.status === 1"> Restart</a></li>
+                <li role="menuitem"><a data-ng-click="self.actions('start', [state.IpAddress])" ng-if="state.status === 0"> Start</a></li>
+                <li role="menuitem"><a data-ng-click="self.actions('stop', [state.IpAddress])" ng-if="state.status === 1"> Stop </a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li data-ng-show="self.stateList.length === 0" class="item">
+        <div class="nodata">Data not available</div>
+      </li>
+    </ul>
+  </div>
+
+</article>
