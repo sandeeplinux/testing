@@ -23,11 +23,11 @@ angular.module("app").controller('AuthCtrl', ['AuthService', '$state', function(
     };
 
     AuthService.authoriseAPI(self.model)
-      .success(function(response) {
-        AuthService.SetCredentials(response);
+      //.success(function(response) {
+        //AuthService.SetCredentials(response);
         $state.go("app.dashboard");
-      })
-      .error(handleError);
+      //})
+      //.error(handleError);
   };
 
 
