@@ -14,5 +14,6 @@ var app = angular.module('app', [
   'angularMoment',
   'toaster',
   'simplePagination',
-  'ngMap'
+  'ngMap',
+  'highcharts-ng'
 ]);

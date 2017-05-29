@@ -2,113 +2,56 @@
 
 angular.module("app").controller('dashboardCtrl', ['DashboardService', '$rootScope', '$scope', 'appService', '$state', function(DashboardService, $rootScope, $scope, appService, $state) {
   var dashboard = this;
-  var traits = [];
   dashboard.userName = $rootScope.globals.currentUser;
-  (function() {
-    var isSessionExist = appService.checkSessionOnURLChange();
-    if (!isSessionExist) {
-      $state.go('login');
-     }
-		  else {
-      getresponsedata();
-    }
+  var defaultParams = {
+    title: 'Memory Usage'
+  };
+  dashboard.chartOption = DashboardService.chartOptions(defaultParams);
+
+  (function () {
+    setInterval(function () {
+        addSeries();
+    }, 1000);
   })();
 
-  function getresponsedata() {
-    DashboardService.getcputime()
-      .success(function(response) {
-        console.log(response);
-        dynamicUpdate(response);
-        return response;
-      })
-      .error(function(error) {
-        console.log(error);
-      });
+  dashboard.selectServerType = function (type) {
+    var params = {};
+    switch (type) {
+      case 'memory':
+        params.title = 'Memory Usage';
+        break;
+      case 'cpu':
+        params.title = 'CPU Usage';
+        break;
+      case 'disk':
+        params.title = 'Disk Usage';
+        break;
+    }
+
+    dashboard.chartOption = DashboardService.chartOptions(params);
   };
 
-  function dynamicUpdate(responsedata) {
-    Highcharts.chart('container', {
-      chart: {
-        type: 'column',
-        animation: Highcharts.svg, // don't animate in old IE
-        marginRight: 10,
-        events: {
-          load: function() {
-            //
-            // // set up the updating of the chart each second
-	            var series = this.series[0];
-            //
-            // setInterval(function() {
-            //   var serverdata = getresponsedata();
-            //   var x = (new Date()).getTime(), // current time
-            //     y = serverdata.responsePayloadData.freeMemory;
-            //   series.addPoint([x, y], true, true);
-            // }, 10000);
-            setInterval(function() {
-              DashboardService.getcputime()
-                .success(function(response) {
-									console.log(response.responsePayloadData.freeMemory);
-                  var x = (new Date()).getTime(), // current time
-                    y = response.responsePayloadData.freeMemory;
-                  series.addPoint([x, y], true, true);
-                }).error(function(error) {
-                  //error
-                });
-            }, 3000);
-          }
-        }
-      },
-      title: {
-        text: 'System Health'
-      },
-      xAxis: {
-        type: 'datetime'
-      },
-      yAxis: {
-        title: {
-          text: 'Value'
-        },
-        plotLines: [{
-          value: 0,
-          width: 1,
-          color: '#808080'
-        }]
-      },
-      /*tooltip: {
-          formatter: function () {
-              return '<b>' + this.series.name + '</b><br/>' +
-                  Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
-                  Highcharts.numberFormat(this.y, 2);
-          }
-      },*/
-      legend: {
-        enabled: false
-      },
-      exporting: {
-        enabled: false
-      },
-      series: [{
-        name: 'freeMemory',
-        data: (function() {
-          //grapharray.push(data.responsePayloadData.freeMemory);
-          //console.log(grapharray);
-          // generate an array of random data
-          var data = [],
-            time = (new Date()).getTime(),
-            i;
+  dashboard.setServer = function (param) {
+    DashboardService.setURL(param);
+    //addSeries()
+  };
 
-          for (i = -199; i <= 0; i += 1) {
-            // var serverdata = getresponsedata();
-            // console.log(serverdata);
-            data.push({
-              x: time + i * 1000,
-              y: Math.round(Math.random() * 200000000)
-            });
+  function addSeries () {
+
+      function successResponse (response) {
+          var seriesPoint = {
+            x: (new Date()).getTime(),
+            y: response ? response.responsePayloadData.diskUsage : Math.round(Math.random() * 2)
           }
-          console.log(data);
-          return data;
-        }())
-      }]
-    });
-  }
+         dashboard.chartOption.series[0].data.push(seriesPoint);
+      }
+      // Enable this to get the data from server
+      DashboardService.getcputime()
+                      .success(successResponse)
+                      .error(function (error) {
+                        console.log('Error >>>', error);
+                      });
+
+  };
+
 }]);
