@@ -1,0 +1,27 @@
+{
+  "nav": { },
+  "common": {
+    "labels": {
+      "name": "Name",
+      "search_for": "Search for",
+      "no_data": "Data not available",
+      "last_update": "Last update",
+      "updated_by": "Updated By",
+      "created_at": "Created At",
+      "created_by": "Created By",
+      "status": "Status"
+    },
+    "buttons": {
+      "add_new": "Add new",
+      "cancle": "Cancle",
+      "submit": "Submit",
+      "save": "Save"
+    },
+    "validation_messages": {   },
+    "success_messages":  {
+        "added": "Added Successfully",
+        "deleted": "Deleted Successfully"
+    },
+    "error_messages": {}
+  }
+}
