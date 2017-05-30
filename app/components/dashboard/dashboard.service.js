@@ -1,4 +1,3 @@
-
 'use strict';
 angular.module('app').factory('DashboardService', ['$http', '$rootScope', function($http, $rootScope) {
 

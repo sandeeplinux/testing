@@ -1,6 +1,5 @@
 .sidebar-header{
-    background-color: $primary-color;
-   //box-shadow: 0 2px 4px rgba(33,33,33,.2);
+    background-color: $app-red;
     color: #666666;
     position: fixed;
     top: 0px;
@@ -15,19 +14,14 @@
 
 .header{
     height: 60px;
-    background-color: $primary-color;
+    background-color: $app-red;
     position: fixed;
-    //box-shadow: 0 2px 4px rgba(33,33,33,.2);
     z-index: 20;
     left: 0px;
-    -webkit-box-shadow: 1px 6px 5px -2px rgba(219,219,219,1);
-    -moz-box-shadow: 1px 6px 5px -2px rgba(219,219,219,1);
-    box-shadow: 1px 6px 5px -2px rgba(219,219,219,1);
 }
 
 .sidebar {
-    box-shadow: 0 0 10px 0 rgba(33,33,33,.2);
-    .nav{
+     .nav{
         li{
             a{
                 color: #222;
