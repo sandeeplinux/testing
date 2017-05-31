@@ -14,7 +14,7 @@ angular.module('app').factory('DashboardService', ['$http', '$rootScope', functi
     var data = [];
     var time = (new Date()).getTime();
 
-    for (var i = -199; i <= 0; i += 1) {
+    for (var i = -19; i <= 0; i += 1) {
       data.push({
         x: time + i * 5000,
         y: Math.round(Math.random() * 2)
@@ -58,7 +58,7 @@ angular.module('app').factory('DashboardService', ['$http', '$rootScope', functi
     var options = {
       options: {
         chart: {
-            type: 'column'
+            type: 'line'
         }
       },
       title: {
@@ -84,7 +84,7 @@ angular.module('app').factory('DashboardService', ['$http', '$rootScope', functi
         enabled: false
       },
       size: {
-        width: "1000",
+        width: "350",
         height: "300"
       },
       loading: false,
@@ -95,7 +95,7 @@ angular.module('app').factory('DashboardService', ['$http', '$rootScope', functi
 
     options.series =  [{
       name: params.title,
-      type: "column",
+      type: "line",
       data: generateSeriesData()
     }];
 

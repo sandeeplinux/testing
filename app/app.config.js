@@ -22,11 +22,16 @@ app.config(['$windowProvider', '$translateProvider', '$httpProvider', function($
 
     return {
       request: function(config) {
+        var loaderRestrictedUrls = [
+          "http://10.124.30.33:5080/dep/devops/systemHealth",
+          "http://10.124.30.34:5080/dep/devops/systemHealth",
+          "http://10.124.30.35:5080/dep/devops/systemHealth"
+        ];
         config.headers = config.headers || {};
         if ($localStorage.token) {
           config.headers.Authorization = $localStorage.token;
         }
-        if (config.url === "http://10.124.30.35:5080/dep/devops/systemHealth") {
+        if (loaderRestrictedUrls.indexOf(config.url) > -1) {
           $rootScope.ajaxProgress = 0;
         } else {
           $rootScope.ajaxProgress++;
