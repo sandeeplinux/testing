@@ -2,11 +2,9 @@
 
 angular.module("app").controller('dashboardCtrl', ['DashboardService', '$rootScope', '$scope', 'appService', '$state', function(DashboardService, $rootScope, $scope, appService, $state) {
   var dashboard = this;
-  dashboard.userName = $rootScope.globals.currentUser;
-  var defaultParams = {
-    title: 'Memory Usage'
-  };
-  dashboard.chartOption = DashboardService.chartOptions(defaultParams);
+
+  dashboard.chartOption = DashboardService.chartOptions(setServerProperties());
+  //dashboard.server2Config = DashboardService.chartOptions(setServerProperties());
 
   (function () {
     setInterval(function () {
@@ -17,40 +15,57 @@ angular.module("app").controller('dashboardCtrl', ['DashboardService', '$rootSco
   dashboard.selectServerType = function (type) {
     var params = {};
     switch (type) {
-      case 'memory':
-        params.title = 'Memory Usage';
+      case 'memoryUsage':
+        setServerProperties(type, 'Memory Usage');
         break;
-      case 'cpu':
-        params.title = 'CPU Usage';
+      case 'cpuUsage':
+        setServerProperties(type, 'CPU Usage');
         break;
-      case 'disk':
-        params.title = 'Disk Usage';
+      case 'diskUsage':
+        setServerProperties(type, 'Disk Usage');
         break;
     }
 
-    dashboard.chartOption = DashboardService.chartOptions(params);
+    dashboard.chartOption = DashboardService.chartOptions(dashboard.selectedChart);
   };
 
-  dashboard.setServer = function (param) {
-    DashboardService.setURL(param);
-    //addSeries()
+  dashboard.setServerURL = function (param) {
+    DashboardService.setURL(param);    
   };
+
+  function setServerProperties (type, title) {
+    if (type) {
+      dashboard.selectedChart = {
+        type: type,
+        title: title
+      };
+    } else {
+      return  {
+        type: 'memoryUsage',
+        title: 'Memory Usage'
+      };
+    }
+  }
 
   function addSeries () {
+
+    successResponse();
 
       function successResponse (response) {
           var seriesPoint = {
             x: (new Date()).getTime(),
-            y: response ? response.responsePayloadData.diskUsage : Math.round(Math.random() * 2)
-          }
+            y: response ? response.responsePayloadData[dashboard.selectedChart.type] : Math.round(Math.random() * 2)
+          };
          dashboard.chartOption.series[0].data.push(seriesPoint);
+         dashboard.chartOption.series[0].data.shift();
+         $scope.$apply();
       }
       // Enable this to get the data from server
-      DashboardService.getcputime()
+      /*DashboardService.getcputime()
                       .success(successResponse)
                       .error(function (error) {
                         console.log('Error >>>', error);
-                      });
+                      });*/
 
   };
 
