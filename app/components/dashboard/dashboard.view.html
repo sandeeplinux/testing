@@ -1,10 +1,11 @@
+
 <div class="sidebar-overlay" id="sidebar-overlay"></div>
 <article class="content items-list-page">
     <h1>Dashboard</h1>
 
     <uib-tabset type="tabs" class="dashboard-tabs">
-      <uib-tab heading="Server1" ng-click="self.setServer('33')">
-        <h2>Server1</h2>
+      <uib-tab heading="Server1" ng-click="self.setServerURL('33')">
+        <h3>10.124.30.33</h3>
         <div class="group-button">
           <ul class="pagination">
             <li><a href="javascript:;" ng-click="self.selectServerType('memoryUsage')">Memory</a></li>
@@ -15,25 +16,26 @@
         <highchart id="server1" config="self.chartOption"></highchart>
       </uib-tab>
 
-      <uib-tab heading="Server2" classes="btn-sm" ng-click="self.setServer('34')">
-        <h2>Server2</h2>
+
+      <uib-tab heading="Server2" classes="btn-sm" ng-click="self.setServerURL('34')">
+        <h3>10.124.30.34</h3>
         <div class="group-button">
           <ul class="pagination">
-            <li><a href="javascript:;" ng-click="self.selectServerType('memory')">Memory</a></li>
-            <li><a href="javascript:;" ng-click="self.selectServerType('cpu')">CPU</a></li>
-            <li><a href="javascript:;" ng-click="self.selectServerType('disk')">DISK</a></li>
+            <li><a href="javascript:;" ng-click="self.selectServerType('memoryUsage')">Memory</a></li>
+            <li><a href="javascript:;" ng-click="self.selectServerType('cpuUsage')">CPU</a></li>
+            <li><a href="javascript:;" ng-click="self.selectServerType('diskUsage')">DISK</a></li>
           </ul>
         </div>
-        <highchart id="server2" config="self.server2Config"></highchart>
+        <highchart id="server2" config="self.chartOption"></highchart>
       </uib-tab>
 
-      <uib-tab heading="Server3" classes="btn-sm" ng-click="self.setServer('35')">
-        <h2>Server3</h2>
+      <uib-tab heading="Server3" classes="btn-sm" ng-click="self.setServerURL('35')">
+        <h3>10.124.30.35</h3>
         <div class="group-button">
           <ul class="pagination">
-            <li><a href="javascript:;" ng-click="self.selectServerType('memory')">Memory</a></li>
-            <li><a href="javascript:;" ng-click="self.selectServerType('cpu')">CPU</a></li>
-            <li><a href="javascript:;" ng-click="self.selectServerType('disk')">DISK</a></li>
+            <li><a href="javascript:;" ng-click="self.selectServerType('memoryUsage')">Memory</a></li>
+            <li><a href="javascript:;" ng-click="self.selectServerType('cpuUsage')">CPU</a></li>
+            <li><a href="javascript:;" ng-click="self.selectServerType('diskUsage')">DISK</a></li>
           </ul>
         </div>
         <highchart id="server3" config="self.chartOption"></highchart>

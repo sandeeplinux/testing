@@ -1,8 +1,9 @@
 'use strict';
 
-angular.module("app").controller('NodeAdminCtrl', ['NodeAdminService', '$state', function(NodeAdminService, $state) {
+angular.module("app").controller('NodeAdminCtrl', ['NodeAdminService', '$state', '$timeout', '$scope', function(NodeAdminService, $state, $timeout, $scope) {
   var self = this;
   self.model = {};
+  self.refreshTime = 10 * 60 * 1000;
   self.stateList = [{
     "server": "server V1",
     "IpAddress": "10.124.30.33",
@@ -26,6 +27,7 @@ angular.module("app").controller('NodeAdminCtrl', ['NodeAdminService', '$state',
     _.each(self.stateList, function(item, index) {
       NodeAdminService.getStatusAPI(item.IpAddress)
         .success(function(response) {
+          console.log(self.refreshTime);
           if (response.responseMetaData.statusCode == "0000") {
             if (response.responsePayloadData.scriptResponseDesc == "DOWN") {
               item.status = 0;
@@ -33,23 +35,29 @@ angular.module("app").controller('NodeAdminCtrl', ['NodeAdminService', '$state',
               item.status = 1;
             }
           }
-          console.log('____________________________________________________________________');
-          console.log(response);
           self.stateList = self.stateList;
-          console.log('____________________________________________________________________');
+
         })
         .error(function(error) {
           console.log(error);
         });
-      // self.selectedIds.push(item._id);
-    }); // self.statesCount = 0;
-    // self.pagesCount = 0;
 
+    });
+
+    // Reload
+    var reload = $timeout(getAll, self.refreshTime);
+    $scope.$on('$destroy', function(){
+      $timeout.cancel(reload);
+    });
   }
 
   (function() {
     getAll();
   })();
+
+  self.setRefreshTime = function(minutes) {
+    self.refreshTime = minutes * 60 * 1000;
+  };
 
   self.checkAll = function(sourceArr, isChecked) {
     NodeAdminService.checkAll(sourceArr, isChecked);

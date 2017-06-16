@@ -4,12 +4,13 @@ angular.module("app").controller('dashboardCtrl', ['DashboardService', '$rootSco
   var dashboard = this;
 
   dashboard.chartOption = DashboardService.chartOptions(setServerProperties());
-  //dashboard.server2Config = DashboardService.chartOptions(setServerProperties());
+  // dashboard.server2Config = DashboardService.chartOptions(setServerProperties());
+  // dashboard.server3Config = DashboardService.chartOptions(setServerProperties());
 
   (function () {
     setInterval(function () {
         addSeries();
-    }, 1000);
+    }, 3000);
   })();
 
   dashboard.selectServerType = function (type) {
@@ -30,7 +31,8 @@ angular.module("app").controller('dashboardCtrl', ['DashboardService', '$rootSco
   };
 
   dashboard.setServerURL = function (param) {
-    DashboardService.setURL(param);    
+    DashboardService.setURL(param);
+    dashboard.chartOption = DashboardService.chartOptions(setServerProperties());
   };
 
   function setServerProperties (type, title) {
@@ -40,16 +42,17 @@ angular.module("app").controller('dashboardCtrl', ['DashboardService', '$rootSco
         title: title
       };
     } else {
-      return  {
+      dashboard.selectedChart = {
         type: 'memoryUsage',
         title: 'Memory Usage'
       };
+      return dashboard.selectedChart;
     }
   }
 
   function addSeries () {
 
-    successResponse();
+    // successResponse();
 
       function successResponse (response) {
           var seriesPoint = {
@@ -60,12 +63,11 @@ angular.module("app").controller('dashboardCtrl', ['DashboardService', '$rootSco
          dashboard.chartOption.series[0].data.shift();
          $scope.$apply();
       }
-      // Enable this to get the data from server
-      /*DashboardService.getcputime()
+      DashboardService.getcputime()
                       .success(successResponse)
                       .error(function (error) {
                         console.log('Error >>>', error);
-                      });*/
+                      });
 
   };
 

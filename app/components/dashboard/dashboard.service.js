@@ -4,13 +4,13 @@ angular.module('app').factory('DashboardService', ['$http', '$rootScope', functi
   var service = {};
   var base_url = $rootScope.base_url;
   var seriesData = [];
-  var url = 'http://10.124.30.35:5080/dep/devops/systemHealth';
+  var url = 'http://10.124.30.33:5080/dep/devops/systemHealth';
 
   function getUserID() {
     return $rootScope.globals.currentUser.id;
   }
 
-  function generateSeriesData () {
+  function generateSeriesData() {
     var data = [];
     var time = (new Date()).getTime();
 
@@ -24,51 +24,62 @@ angular.module('app').factory('DashboardService', ['$http', '$rootScope', functi
     return data;
   }
 
-  service.setURL = function (param) {
-    url = 'http://10.124.30.'+ param +':5080/dep/devops/systemHealth';
+  service.setURL = function(param) {
+    url = 'http://10.124.30.' + param + ':5080/dep/devops/systemHealth';
   }
 
   service.getcputime = function() {
     return $http.get(url);
-  /*  return {
-        "responseMetaData":{
-            "statusCode":"0000",
-            "statusDesc":"Success"
-        },
-        "responsePayloadData":{
-            "cores":4,
-            "freeMemory":199052248,
-            "totalMemory":251658240,
-            "osArch":"amd64",
-            "osName":"Linux",
-            "osVersion":"3.10.0-514.el7.x86_64",
-            "loadAvg":0.0,
-            "threadCount":15,
-            "allThreadsCpuTime":17699544716,
-            "cpuUsage":1.88,
-            "diskUsage":0,
-            "memoryUsage":5.2605992E7,
-            "token":null
-        }
-      }*/
+    /*  return {
+          "responseMetaData":{
+              "statusCode":"0000",
+              "statusDesc":"Success"
+          },
+          "responsePayloadData":{
+              "cores":4,
+              "freeMemory":199052248,
+              "totalMemory":251658240,
+              "osArch":"amd64",
+              "osName":"Linux",
+              "osVersion":"3.10.0-514.el7.x86_64",
+              "loadAvg":0.0,
+              "threadCount":15,
+              "allThreadsCpuTime":17699544716,
+              "cpuUsage":1.88,
+              "diskUsage":0,
+              "memoryUsage":5.2605992E7,
+              "token":null
+          }
+        }*/
   };
 
-  service.chartOptions = function (params) {
+  service.chartOptions = function(params) {
     var self = this;
     var options = {
       options: {
         chart: {
-            type: 'line'
+          type: 'line',
+          // backgroundColor: '#282e3f'
         }
       },
       title: {
-        text: params.title
+        text: params.title,
+        style: {
+          // color: '#F00',
+          font: '18px Trebuchet MS, Verdana, sans-serif'
+        }
       },
       xAxis: {
-        type: 'datetime'
+          type: 'datetime'
       },
       yAxis: {
         title: {
+          style: {
+            // color: '#f00',
+            fontWeight: 'bold',
+            fontSize: '12px',
+            fontFamily: 'Trebuchet MS, Verdana, sans-serif'
+         },
           text: params.title
         },
         plotLines: [{
@@ -83,8 +94,10 @@ angular.module('app').factory('DashboardService', ['$http', '$rootScope', functi
       credits: {
         enabled: false
       },
+      condition: {
+        maxWidth: '90%'
+      },
       size: {
-        width: "350",
         height: "300"
       },
       loading: false,
@@ -93,7 +106,7 @@ angular.module('app').factory('DashboardService', ['$http', '$rootScope', functi
       }
     };
 
-    options.series =  [{
+    options.series = [{
       name: params.title,
       type: "line",
       data: generateSeriesData()

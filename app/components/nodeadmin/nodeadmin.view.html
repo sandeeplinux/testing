@@ -1,7 +1,9 @@
 <style>
+
+
   h1 {
- padding-bottom: 1.5%;
- border-bottom: 1px solid #859398;
+    padding-bottom: 1.5%;
+    border-bottom: 1px solid #859398;
   }
 </style>
 
@@ -14,28 +16,43 @@
     <div class="title-block">
       <div class="row">
         <div class="col-md-6">
-          <div class="title">
-            <!--<a ui-sref="app.addState" class="btn btn-orenge btn-sm rounded-s">
-                            <i class="fa fa-plus"></i> Add New
-                        </a>-->
-            <br />
-            <button type="button" class="btn btn-orenge btn-sm rounded-s" data-ng-click="self.actions('delete', self.selectedIds)" data-ng-if="self.selectedIds.length > 0">
-                                   Delete Selected
-                        </button>
-          </div>
+
         </div>
       </div>
     </div>
-    <div class="items-search">
-      <form class="form-inline" ng-submit="self.fetchData()">
-        <div class="input-group">
-          <input type="text" class="form-control boxed rounded-s" data-ng-model="self.query.filter" placeholder="Search for...">
-          <span class="input-group-btn">
-                    <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-                  </span>
-        </div>
-      </form>
+
+    <div class="clearfix" style="margin-bottom:10px">
+      <div class="btn-group pull-right" data-toggle="buttons">
+        <label class="btn btn-primary" ng-click="self.setRefreshTime(1)">
+        <input type="radio" name="refreshDelay" id="option1" autocomplete="off" checked> 1 min
+      </label>
+        <label class="btn btn-primary" ng-click="self.setRefreshTime(5)">
+        <input type="radio" name="refreshDelay" id="option2" autocomplete="off"> 5 min
+      </label>
+        <label class="btn btn-primary active" ng-click="self.setRefreshTime(10)">
+        <input type="radio" name="refreshDelay" id="option3" autocomplete="off" checked> 10 min
+      </label>
+      </div>
     </div>
+
+    <!-- <div class="clearfix">
+      <div class="form-group pull-left">
+        <label ng-click="self.setRefreshTime(1)">
+              <input type="radio" name="refreshDelay" /> 1 Min
+            </label>
+      </div>
+      <div class="form-group pull-left">
+        <label ng-click="self.setRefreshTime(5)">
+              <input type="radio" name="refreshDelay" /> 5 Min
+            </label>
+      </div>
+      <div class="form-group pull-left">
+        <label ng-click="self.setRefreshTime(10)">
+              <input type="radio" name="refreshDelay" checked /> 10 Min
+            </label>
+      </div>
+    </div> -->
+
   </div>
   <div>
     <alert:message options="globals.flash" data-ng-show="globals.flash" />
@@ -98,16 +115,25 @@
             </div>
           </div>
           <div class="item-col fixed item-col-title">
-            <div class="btn-group " uib-dropdown is-open="status.isopen">
+            <button type="button" class="btn btn-default" aria-label="Left Align" data-ng-click="self.actions('start', [state.IpAddress])" ng-if="state.status === 0">
+              Start
+            </button>
+            <button type="button" class="btn btn-default" aria-label="Left Align" ng-if="state.status === 1" data-ng-click="self.actions('restart',[state.IpAddress])">
+              Restart
+            </button>
+            <button type="button" class="btn btn-default" aria-label="Left Align" data-ng-click="self.actions('stop', [state.IpAddress])" ng-if="state.status === 1">
+              Stop
+            </button>
+            <!-- <div class="btn-group " uib-dropdown is-open="status.isopen">
               <button id="single-button" type="button" class=" pull-right btn btn-defult more-btn" uib-dropdown-toggle ng-disabled="disabled">
                             <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                           </button>
               <ul class="dropdown-menu pull-right " uib-dropdown-menu role="menu" aria-labelledby="single-button">
-                <li role="menuitem"><a data-ng-click="self.actions('restart',[state.IpAddress])" ng-if="state.status === 1"> Restart</a></li>
+                <li role="menuitem"><a data-ng-click="self.actions('restart',[state.IpAddress])" > Restart</a></li>
                 <li role="menuitem"><a data-ng-click="self.actions('start', [state.IpAddress])" ng-if="state.status === 0"> Start</a></li>
                 <li role="menuitem"><a data-ng-click="self.actions('stop', [state.IpAddress])" ng-if="state.status === 1"> Stop </a></li>
               </ul>
-            </div>
+            </div> -->
           </div>
         </div>
       </li>
